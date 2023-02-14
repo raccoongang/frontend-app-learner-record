@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {
-  render, screen, cleanup, initializeMockApp,
+  render, screen, cleanup, initializeMockApp, fireEvent,
 } from '../../../setupTest';
 import ProgramCertificate from '..';
 
@@ -37,11 +37,19 @@ describe('program-certificate', () => {
 
   it('it should display a program organization', () => {
     render(<ProgramCertificate {...props} />);
-    expect(screen.getByText('Completed on 2/2/2023')).toBeTruthy();
+    expect(screen.getByText('Awarded on 2/2/2023')).toBeTruthy();
   });
 
   it('it should display a default org name if it wasn\'t set', () => {
     render(<ProgramCertificate {...props} program_org="" />);
     expect(screen.getByText('No organization')).toBeTruthy();
+  });
+
+  it('renders modal by clicking on a create button', () => {
+    render(<ProgramCertificate {...props} />);
+    fireEvent.click(screen.getByText('Create'));
+    expect(screen.findByTitle('Verifiable credential')).toBeTruthy();
+    expect(screen.findByLabelText('Close')).toBeTruthy();
+    expect(screen.getByText('Close modal window')).toBeTruthy();
   });
 });

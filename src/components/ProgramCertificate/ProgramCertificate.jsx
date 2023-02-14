@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedDate, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Hyperlink } from '@edx/paragon';
+import { Hyperlink, useToggle } from '@edx/paragon';
+import ProgramCertificateModal from '../ProgramCertificateModal';
 
 import messages from './messages';
 
@@ -14,6 +15,8 @@ function ProgramCertificate(
     modified_date: modifiedDate,
   },
 ) {
+  const [isOpen, open, close] = useToggle(false);
+
   return (
     <div className="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
       <div className="card mb-4 certificate flex-grow-1">
@@ -36,9 +39,10 @@ function ProgramCertificate(
             })}
           </p>
           <div>
-            <Hyperlink className="btn btn-outline-primary">
+            <Hyperlink className="btn btn-outline-primary" onClick={open}>
               {intl.formatMessage(messages.certificateCardDeeplinkLabel)}
             </Hyperlink>
+            <ProgramCertificateModal isOpen={isOpen} close={close} />
           </div>
         </div>
       </div>

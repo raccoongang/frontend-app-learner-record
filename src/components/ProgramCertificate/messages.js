@@ -18,7 +18,7 @@ const messages = defineMessages({
   },
   certificateCardDateLabel: {
     id: 'certificate.card.date.label',
-    defaultMessage: 'Completed on {date}',
+    defaultMessage: 'Awarded on {date}',
     description: '',
   },
   certificateCardDeeplinkLabel: {

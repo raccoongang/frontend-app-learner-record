@@ -12,7 +12,7 @@ function NavigationBar({ intl }) {
   const NavigationTabs = [
     {
       id: 'learnerRecords',
-      path: ROUTES.HOME,
+      path: ROUTES.PROGRAM_RECORDS,
     },
   ];
 
@@ -25,12 +25,11 @@ function NavigationBar({ intl }) {
 
   const history = useHistory();
   const location = useLocation();
-  const activeTab = NavigationTabs.filter(tab => tab.path === location.pathname)[0];
 
   return NavigationTabs.length > 1 ? (
     <Tabs
       className="mt-1 mb-5"
-      defaultActiveKey={activeTab.path}
+      defaultActiveKey={location.pathname}
       onSelect={path => history.push(path)}
     >
       {NavigationTabs.map(tab => (
