@@ -37,7 +37,7 @@ describe('program-certificate', () => {
 
   it('it should display a program organization', () => {
     render(<ProgramCertificate {...props} />);
-    expect(screen.getByText('Completed on 2/2/2023')).toBeTruthy();
+    expect(screen.getByText('Awarded on 2/2/2023')).toBeTruthy();
   });
 
   it('it should display a default org name if it wasn\'t set', () => {
