@@ -14,7 +14,7 @@ const messages = defineMessages({
   credentialsListError: {
     id: 'credentials.list.error',
     defaultMessage: 'An error occurred attempting to retrieve your program certificates. Please try again later.',
-    description: "An error message indicating there is a problem retrieving the user's program certificates",
+    description: 'An error message indicating there is a problem retrieving the user\'s program certificates',
   },
   credentialsHeader: {
     id: 'credentials.header',

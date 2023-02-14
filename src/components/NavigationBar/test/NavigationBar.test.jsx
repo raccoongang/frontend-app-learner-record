@@ -29,7 +29,7 @@ describe('navigation-bar', () => {
   afterEach(cleanup);
 
   it('not renders the component with disabled the Verifiable Credentials functionality', () => {
-    mergeConfig({ ENABLE_VERIFIABLE_CREDENTIALS: '' });
+    mergeConfig({ ENABLE_VERIFIABLE_CREDENTIALS: false });
     const { container } = render(<NavigationBar />);
     expect(container.innerHTML).toHaveLength(0);
   });

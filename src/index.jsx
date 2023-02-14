@@ -30,7 +30,7 @@ subscribe(APP_READY, () => {
             <Switch>
               <Route
                 exact
-                path={ROUTES.HOME}
+                path={ROUTES.PROGRAM_RECORDS}
               >
                 <ProgramRecordsList />
               </Route>
@@ -50,7 +50,7 @@ subscribe(APP_READY, () => {
                 />
               </Route>
               <Route
-                path={ROUTES.PROGRAM_RECORD}
+                path={ROUTES.PROGRAM_RECORD_ITEM}
               >
                 <ProgramRecord
                   isPublic={false}
@@ -77,8 +77,8 @@ initialize({
     config: () => {
       mergeConfig({
         SUPPORT_URL_LEARNER_RECORDS: process.env.SUPPORT_URL_LEARNER_RECORDS || '',
-        USE_LR_MFE: process.env.USE_LR_MFE || '',
-        ENABLE_VERIFIABLE_CREDENTIALS: process.env.ENABLE_VERIFIABLE_CREDENTIALS || '',
+        USE_LR_MFE: process.env.USE_LR_MFE || false,
+        ENABLE_VERIFIABLE_CREDENTIALS: process.env.ENABLE_VERIFIABLE_CREDENTIALS || false,
         SUPPORT_URL_VERIFIABLE_CREDENTIALS: process.env.SUPPORT_URL_VERIFIABLE_CREDENTIALS || '',
       }, 'LearnerRecordConfig');
     },
