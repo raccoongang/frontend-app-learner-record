@@ -13,6 +13,7 @@ function ProgramCertificate(
     program_title: programTitle,
     program_org: programOrg,
     modified_date: modifiedDate,
+    uuid,
   },
 ) {
   const [isOpen, open, close] = useToggle(false);
@@ -42,7 +43,7 @@ function ProgramCertificate(
             <Hyperlink className="btn btn-outline-primary" onClick={open}>
               {intl.formatMessage(messages.certificateCardDeeplinkLabel)}
             </Hyperlink>
-            <ProgramCertificateModal isOpen={isOpen} close={close} />
+            <ProgramCertificateModal isOpen={isOpen} close={close} data={{ uuid }} />
           </div>
         </div>
       </div>
@@ -55,6 +56,7 @@ ProgramCertificate.propTypes = {
   program_title: PropTypes.string.isRequired,
   program_org: PropTypes.string.isRequired,
   modified_date: PropTypes.string.isRequired,
+  uuid: PropTypes.string.isRequired,
 };
 
 export default injectIntl(ProgramCertificate);

@@ -15,6 +15,9 @@ import programCertificateModalFactory from './__factories__/programCertificateMo
 const props = {
   isOpen: true,
   close: jest.fn(),
+  data: {
+    uuid: '0123456789abcdef0123456789abcdef',
+  },
 };
 
 describe('program-certificate-modal', () => {
@@ -43,7 +46,7 @@ describe('program-certificate-modal-data', () => {
   it('should display certificate modal when data is present', async () => {
     const axiosMock = new MockAdapter(getAuthenticatedHttpClient());
     axiosMock
-      .onGet(`${getConfig().CREDENTIALS_BASE_URL}/verifiable_credentials/api/v1/credentials/init/`)
+      .onPost(`${getConfig().CREDENTIALS_BASE_URL}/verifiable_credentials/api/v1/credentials/init/`)
       .reply(200, programCertificateModalFactory.build().program_credentials_modal);
     const { findByText, getByTestId } = render(<ProgramCertificateModal {...props} />);
     expect(await findByText('Download and install the app on your smartphone.')).toBeTruthy();
@@ -55,7 +58,7 @@ describe('program-certificate-modal-data', () => {
   it('should throw an error if there is no data', async () => {
     const axiosMock = new MockAdapter(getAuthenticatedHttpClient());
     axiosMock
-      .onGet(`${getConfig().CREDENTIALS_BASE_URL}/verifiable_credentials/api/v1/credentials/init/`)
+      .onPost(`${getConfig().CREDENTIALS_BASE_URL}/verifiable_credentials/api/v1/credentials/init/`)
       .reply(200, {});
     render(<ProgramCertificateModal {...props} />);
     expect(await screen.findByText('An error occurred attempting to retrieve your program certificate. Please try again later.')).toBeTruthy();
