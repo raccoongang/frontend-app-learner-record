@@ -15,13 +15,15 @@ import messages from './messages';
 import appStoreImg from '../../assets/images/appStore.png';
 import googlePlayImg from '../../assets/images/googleplay.png';
 
-function ProgramCertificateModal({ intl, isOpen, close }) {
+function ProgramCertificateModal({
+  intl, isOpen, close, data: { uuid },
+}) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasNoData, setHasNoData] = useState(false);
   const [modalData, setModalData] = useState({});
 
   useEffect(() => {
-    getProgramCertificateDeeplink().then((data) => {
+    getProgramCertificateDeeplink({ uuid }).then((data) => {
       if (_.isEmpty(data)) {
         setHasNoData(true);
       } else {
@@ -32,7 +34,7 @@ function ProgramCertificateModal({ intl, isOpen, close }) {
       const errorMessage = (`Error: Could not fetch learner record data for user: ${error.message}`);
       logError(errorMessage);
     });
-  }, []);
+  }, [uuid]);
 
   const renderCredentialsServiceIssueAlert = () => (
     <div tabIndex="-1">
@@ -169,6 +171,7 @@ ProgramCertificateModal.propTypes = {
   intl: intlShape.isRequired,
   isOpen: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
+  data: PropTypes.shape({ uuid: PropTypes.string.isRequired }).isRequired,
 };
 
 export default injectIntl(ProgramCertificateModal);

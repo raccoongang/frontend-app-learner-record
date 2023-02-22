@@ -1,11 +1,14 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { getConfig } from '@edx/frontend-platform/config';
 
-async function getProgramCertificateDeeplink() {
+async function getProgramCertificateDeeplink({ uuid }) {
   const url = `${getConfig().CREDENTIALS_BASE_URL}/verifiable_credentials/api/v1/credentials/init/`;
+  const requestData = {
+    credential_uuid: uuid,
+  };
   let data = {};
   try {
-    ({ data } = await getAuthenticatedHttpClient().get(url, { withCredentials: true }));
+    ({ data } = await getAuthenticatedHttpClient().post(url, requestData, { withCredentials: true }));
   } catch (error) {
     // We are catching and suppressing errors here on purpose. If an error occurs during the
     // getProgramCertificateDeeplink call we will pass back an empty `data` object. Downstream we make
