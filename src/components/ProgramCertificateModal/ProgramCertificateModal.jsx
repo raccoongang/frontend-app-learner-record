@@ -82,7 +82,7 @@ function ProgramCertificateModal({
                   <img
                     data-testid="qr-code-img"
                     className="mw-100 mh-100"
-                    src={qrcode}
+                    src={`data:image/png;base64,${qrcode}`}
                     alt={intl.formatMessage(messages.certificateModalQrCodeLabel)}
                   />
                 </div>
