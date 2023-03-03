@@ -103,7 +103,7 @@ function ProgramCertificateModal({
               {intl.formatMessage(messages.certificateModalMobileTitle)}
             </p>
             <Button
-              href={appLinkAndroid}
+              href={appLinkIos}
               target="_blank"
               size="lg"
               className="mb-2 bg-gray-900 p-2"
@@ -117,7 +117,7 @@ function ProgramCertificateModal({
               />
             </Button>
             <Button
-              href={appLinkIos}
+              href={appLinkAndroid}
               target="_blank"
               size="lg"
               className="mb-3 bg-gray-900 p-2"
