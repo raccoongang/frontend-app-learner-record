@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedDate, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Hyperlink, useToggle } from '@edx/paragon';
-import ProgramCertificateModal from '../ProgramCertificateModal';
-
+import { Hyperlink } from '@edx/paragon';
 import messages from './messages';
 
 function ProgramCertificate(
@@ -14,9 +12,27 @@ function ProgramCertificate(
     program_org: programOrg,
     modified_date: modifiedDate,
     uuid,
+    handleCreate,
+    storages,
   },
 ) {
-  const [isOpen, open, close] = useToggle(false);
+  // FIXME: remove hardcode when dropdown will be implemented
+  const renderCreationButtons = () => (
+    <div>
+      <Hyperlink className="btn btn-outline-primary" onClick={() => handleCreate(uuid, storages[0].id)}>
+        {intl.formatMessage(messages.certificateCardDeeplinkLabel)}
+      </Hyperlink>
+      {/* {storages.length === 1 ? (
+        <Hyperlink className="btn btn-outline-primary" onClick={() => handleCreate(uuid, storages[0].id)}>
+          {intl.formatMessage(messages.certificateCardDeeplinkLabel)}
+        </Hyperlink>
+      ) : storages.map((storage) => (
+        <Hyperlink className="btn btn-outline-primary" onClick={() => handleCreate(uuid, storage.id)}>
+          {intl.formatMessage(messages.certificateCardDeeplinkManyStoragesLabel, { storageName: storage.name })}
+        </Hyperlink>
+      ))} */}
+    </div>
+  );
 
   return (
     <div className="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
@@ -39,12 +55,7 @@ function ProgramCertificate(
               date: <FormattedDate value={new Date(modifiedDate)} />,
             })}
           </p>
-          <div>
-            <Hyperlink className="btn btn-outline-primary" onClick={open}>
-              {intl.formatMessage(messages.certificateCardDeeplinkLabel)}
-            </Hyperlink>
-            <ProgramCertificateModal isOpen={isOpen} close={close} data={{ uuid }} />
-          </div>
+          {renderCreationButtons()}
         </div>
       </div>
     </div>
@@ -57,6 +68,11 @@ ProgramCertificate.propTypes = {
   program_org: PropTypes.string.isRequired,
   modified_date: PropTypes.string.isRequired,
   uuid: PropTypes.string.isRequired,
+  handleCreate: PropTypes.func.isRequired,
+  storages: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 export default injectIntl(ProgramCertificate);

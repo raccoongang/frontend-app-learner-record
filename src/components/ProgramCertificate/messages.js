@@ -26,6 +26,11 @@ const messages = defineMessages({
     defaultMessage: 'Create',
     description: '',
   },
+  certificateCardDeeplinkManyStoragesLabel: {
+    id: 'certificate.card.deeplinkManyStorages.label',
+    defaultMessage: 'Create with {storageName}',
+    description: '',
+  },
 });
 
 export default messages;
