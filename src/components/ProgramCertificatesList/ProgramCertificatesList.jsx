@@ -53,7 +53,11 @@ function ProgramCertificatesList({ intl }) {
   const handleCreate = (uuid, storageId) => {
     initVerifiableCredentialIssuance({ uuid, storageId }).then((data) => {
       setVerifiableCredentialIssuanceData(data);
-      openModal();
+      if (data.redirect) {
+        window.location = data.deeplink;
+      } else {
+        openModal();
+      }
     }).catch((error) => {
       const errorMessage = (`Error: Could not fetch learner record data for user: ${error.message}`);
       logError(errorMessage);
