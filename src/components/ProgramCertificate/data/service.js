@@ -1,10 +1,11 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { getConfig } from '@edx/frontend-platform/config';
 
-async function getProgramCertificateDeeplink({ uuid }) {
+async function getProgramCertificateDeeplink({ uuid, storageId }) {
   const url = `${getConfig().CREDENTIALS_BASE_URL}/verifiable_credentials/api/v1/credentials/init/`;
   const requestData = {
     credential_uuid: uuid,
+    storage_id: storageId,
   };
   let data = {};
   try {

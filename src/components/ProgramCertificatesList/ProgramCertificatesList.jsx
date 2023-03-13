@@ -10,24 +10,35 @@ import { logError } from '@edx/frontend-platform/logging';
 
 import ProgramCertificate from '../ProgramCertificate';
 import NavigationBar from '../NavigationBar';
-import getProgramCertificates from './data/service';
+import getProgramCertificates, { getAvailableStorages } from './data/service';
 import messages from './messages';
 
 function ProgramCertificatesList({ intl }) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [hasNoData, setHasNoData] = useState(false);
+  const [certificatesIsLoaded, setCertificatesIsLoaded] = useState(false);
+  const [certificatesHasNoData, setCertificatesHasNoData] = useState(false);
   const [certificates, setCertificates] = useState([]);
+
+  const [storagesIsLoaded, setStoragesIsLoaded] = useState(false);
+  const [storages, setStorages] = useState([]);
 
   useEffect(() => {
     getProgramCertificates().then((data) => {
       if (_.isEmpty(data)) {
-        setHasNoData(true);
+        setCertificatesHasNoData(true);
       } else {
         setCertificates(data.program_credentials);
       }
-      setIsLoaded(true);
+      setCertificatesIsLoaded(true);
     }).catch((error) => {
-      const errorMessage = (`Error: Could not fetch learner record data for user: ${error.message}`);
+      const errorMessage = (`Error: Could not fetch program certificates for user: ${error.message}`);
+      logError(errorMessage);
+    });
+
+    getAvailableStorages().then((data) => {
+      setStorages(data);
+      setStoragesIsLoaded(true);
+    }).catch((error) => {
+      const errorMessage = (`Error: Could not fetch available storages: ${error.message}`);
       logError(errorMessage);
     });
   }, []);
@@ -66,14 +77,20 @@ function ProgramCertificatesList({ intl }) {
         {intl.formatMessage(messages.credentialsDescription)}
       </p>
       <Row className="mt-4">
-        {certificates.map((certificate) => <ProgramCertificate key={certificate.uuid} {...certificate} />)}
+        {(certificates.map((certificate) => (
+          <ProgramCertificate
+            key={certificate.uuid}
+            storages={storages}
+            {...certificate}
+          />
+        )))}
       </Row>
     </section>
   );
 
   const renderData = () => {
-    if (isLoaded) {
-      if (hasNoData) {
+    if (certificatesIsLoaded || storagesIsLoaded) {
+      if (certificatesHasNoData) {
         return renderCredentialsServiceIssueAlert();
       }
       if (!certificates.length) {
