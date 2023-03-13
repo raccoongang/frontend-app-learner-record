@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 
 import { ChevronLeft, Info } from '@edx/paragon/icons';
-import { Alert, Hyperlink, Row } from '@edx/paragon';
+import {
+  Alert, Hyperlink, Row, useToggle,
+} from '@edx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import { getConfig } from '@edx/frontend-platform/config';
@@ -10,8 +12,9 @@ import { logError } from '@edx/frontend-platform/logging';
 
 import ProgramCertificate from '../ProgramCertificate';
 import NavigationBar from '../NavigationBar';
-import getProgramCertificates, { getAvailableStorages } from './data/service';
+import { getProgramCertificates, getAvailableStorages, initVerifiableCredentialIssuance } from './data/service';
 import messages from './messages';
+import ProgramCertificateModal from '../ProgramCertificateModal';
 
 function ProgramCertificatesList({ intl }) {
   const [certificatesIsLoaded, setCertificatesIsLoaded] = useState(false);
@@ -20,6 +23,10 @@ function ProgramCertificatesList({ intl }) {
 
   const [storagesIsLoaded, setStoragesIsLoaded] = useState(false);
   const [storages, setStorages] = useState([]);
+
+  const [modalIsOpen, openModal, closeModal] = useToggle(false);
+
+  const [verfifiableCredentialIssuanceData, setVerifiableCredentialIssuanceData] = useState({});
 
   useEffect(() => {
     getProgramCertificates().then((data) => {
@@ -42,6 +49,16 @@ function ProgramCertificatesList({ intl }) {
       logError(errorMessage);
     });
   }, []);
+
+  const handleCreate = (uuid, storageId) => {
+    initVerifiableCredentialIssuance({ uuid, storageId }).then((data) => {
+      setVerifiableCredentialIssuanceData(data);
+      openModal();
+    }).catch((error) => {
+      const errorMessage = (`Error: Could not fetch learner record data for user: ${error.message}`);
+      logError(errorMessage);
+    });
+  };
 
   const renderProfile = () => {
     const { username } = getAuthenticatedUser();
@@ -81,6 +98,7 @@ function ProgramCertificatesList({ intl }) {
           <ProgramCertificate
             key={certificate.uuid}
             storages={storages}
+            handleCreate={handleCreate}
             {...certificate}
           />
         )))}
@@ -126,6 +144,7 @@ function ProgramCertificatesList({ intl }) {
       </h1>
       {renderData()}
       {renderHelp()}
+      <ProgramCertificateModal isOpen={modalIsOpen} close={closeModal} data={verfifiableCredentialIssuanceData} />
     </main>
   );
 }

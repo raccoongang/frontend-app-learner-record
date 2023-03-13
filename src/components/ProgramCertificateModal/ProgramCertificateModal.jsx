@@ -11,14 +11,14 @@ import appStoreImg from '../../assets/images/appStore.png';
 import googlePlayImg from '../../assets/images/googleplay.png';
 
 function ProgramCertificateModal({
-  intl, isOpen, close, modalData,
+  intl, isOpen, close, data,
 }) {
   const {
     deeplink,
     qrcode,
     app_link_android: appLinkAndroid,
     app_link_ios: appLinkIos,
-  } = modalData;
+  } = data;
 
   return (
     <StandardModal
@@ -127,7 +127,7 @@ ProgramCertificateModal.propTypes = {
   intl: intlShape.isRequired,
   isOpen: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
-  modalData: PropTypes.object.isRequired,
+  data: PropTypes.shape.isRequired,
 };
 
 export default injectIntl(ProgramCertificateModal);
