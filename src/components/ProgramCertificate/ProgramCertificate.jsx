@@ -16,10 +16,9 @@ function ProgramCertificate(
     storages,
   },
 ) {
-
   const renderCreationButtons = () => (
     <div>
-      {/* FIXME (once multi-storages UX is approved): unconditionally use the first storage.*/}
+      {/* FIXME (once multi-storages UX is approved): unconditionally use the first storage. */}
       <Hyperlink className="btn btn-outline-primary" onClick={() => handleCreate(uuid, storages[0].id)}>
         {intl.formatMessage(messages.certificateCardDeeplinkLabel)}
       </Hyperlink>
