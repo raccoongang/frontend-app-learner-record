@@ -16,21 +16,12 @@ function ProgramCertificate(
     storages,
   },
 ) {
-  // FIXME: remove hardcode when dropdown will be implemented
   const renderCreationButtons = () => (
     <div>
+      {/* FIXME (once multi-storages UX is approved): unconditionally use the first storage. */}
       <Hyperlink className="btn btn-outline-primary" onClick={() => handleCreate(uuid, storages[0].id)}>
         {intl.formatMessage(messages.certificateCardDeeplinkLabel)}
       </Hyperlink>
-      {/* {storages.length === 1 ? (
-        <Hyperlink className="btn btn-outline-primary" onClick={() => handleCreate(uuid, storages[0].id)}>
-          {intl.formatMessage(messages.certificateCardDeeplinkLabel)}
-        </Hyperlink>
-      ) : storages.map((storage) => (
-        <Hyperlink className="btn btn-outline-primary" onClick={() => handleCreate(uuid, storage.id)}>
-          {intl.formatMessage(messages.certificateCardDeeplinkManyStoragesLabel, { storageName: storage.name })}
-        </Hyperlink>
-      ))} */}
     </div>
   );
 
