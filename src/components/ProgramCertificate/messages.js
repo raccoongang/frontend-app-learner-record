@@ -21,15 +21,15 @@ const messages = defineMessages({
     defaultMessage: 'Awarded on {date}',
     description: '',
   },
-  certificateCardDeeplinkLabel: {
-    id: 'certificate.card.deeplink.label',
+  certificateCardActionLabel: {
+    id: 'certificate.card.action.label',
     defaultMessage: 'Create',
-    description: '',
+    description: 'A text on single action button',
   },
-  certificateCardDeeplinkManyStoragesLabel: {
-    id: 'certificate.card.deeplinkManyStorages.label',
-    defaultMessage: 'Create with {storageName}',
-    description: '',
+  certificateCardMultiActionLabel: {
+    id: 'certificate.card.multiAction.label',
+    defaultMessage: 'Create with',
+    description: 'A text on a dropdown with multiple action options',
   },
 });
 
