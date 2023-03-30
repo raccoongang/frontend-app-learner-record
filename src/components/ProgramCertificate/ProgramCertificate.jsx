@@ -1,27 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FormattedDate, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Hyperlink } from '@edx/paragon';
+import {
+  FormattedDate,
+  injectIntl,
+  intlShape,
+} from '@edx/frontend-platform/i18n';
+import { Hyperlink, DropdownButton, Dropdown } from '@edx/paragon';
 import messages from './messages';
 
-function ProgramCertificate(
-  {
-    intl,
-    program_title: programTitle,
-    program_org: programOrg,
-    modified_date: modifiedDate,
-    uuid,
-    handleCreate,
-    storages,
-  },
-) {
+function ProgramCertificate({
+  intl,
+  program_title: programTitle,
+  program_org: programOrg,
+  modified_date: modifiedDate,
+  uuid,
+  handleCreate,
+  storages = [],
+}) {
+  const showSingleAction = storages.length === 1;
+
   const renderCreationButtons = () => (
     <div>
-      {/* FIXME (once multi-storages UX is approved): unconditionally use the first storage. */}
-      <Hyperlink className="btn btn-outline-primary" onClick={() => handleCreate(uuid, storages[0].id)}>
-        {intl.formatMessage(messages.certificateCardDeeplinkLabel)}
-      </Hyperlink>
+      {showSingleAction && (
+        <Hyperlink
+          className="btn btn-outline-primary"
+          onClick={() => handleCreate(uuid, storages[0].id)}
+        >
+          {intl.formatMessage(messages.certificateCardActionLabel)}
+        </Hyperlink>
+      )}
+      {!showSingleAction && (
+        <DropdownButton id="dropdown-storages" title={intl.formatMessage(messages.certificateCardMultiActionLabel)}>
+          {storages.map(({ id, name }) => (
+            <Dropdown.Item key={id} onClick={() => handleCreate(uuid, id)}>
+              {name}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+      )}
     </div>
   );
 
@@ -39,7 +56,8 @@ function ProgramCertificate(
             {intl.formatMessage(messages.certificateCardOrgLabel)}
           </p>
           <p className="h6 mb-4">
-            {programOrg || intl.formatMessage(messages.certificateCardNoOrgText)}
+            {programOrg
+              || intl.formatMessage(messages.certificateCardNoOrgText)}
           </p>
           <p className="small mb-2">
             {intl.formatMessage(messages.certificateCardDateLabel, {
@@ -60,10 +78,12 @@ ProgramCertificate.propTypes = {
   modified_date: PropTypes.string.isRequired,
   uuid: PropTypes.string.isRequired,
   handleCreate: PropTypes.func.isRequired,
-  storages: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
+  storages: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default injectIntl(ProgramCertificate);
