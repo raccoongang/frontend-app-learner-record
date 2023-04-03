@@ -5,21 +5,22 @@ import { FormattedDate, injectIntl, intlShape } from '@edx/frontend-platform/i18
 import { Hyperlink } from '@edx/paragon';
 import messages from './messages';
 
-function ProgramCertificate(
-  {
-    intl,
-    program_title: programTitle,
-    program_org: programOrg,
-    modified_date: modifiedDate,
-    uuid,
-    handleCreate,
-    storages,
-  },
-) {
+function ProgramCertificate({
+  intl,
+  program_title: programTitle,
+  program_org: programOrg,
+  modified_date: modifiedDate,
+  uuid,
+  handleCreate,
+  storages = [],
+}) {
   const renderCreationButtons = () => (
     <div>
       {/* FIXME (once multi-storages UX is approved): unconditionally use the first storage. */}
-      <Hyperlink className="btn btn-outline-primary" onClick={() => handleCreate(uuid, storages[0].id)}>
+      <Hyperlink
+        className="btn btn-outline-primary"
+        onClick={() => handleCreate(uuid, storages[0].id)}
+      >
         {intl.formatMessage(messages.certificateCardDeeplinkLabel)}
       </Hyperlink>
     </div>
@@ -39,7 +40,8 @@ function ProgramCertificate(
             {intl.formatMessage(messages.certificateCardOrgLabel)}
           </p>
           <p className="h6 mb-4">
-            {programOrg || intl.formatMessage(messages.certificateCardNoOrgText)}
+            {programOrg
+              || intl.formatMessage(messages.certificateCardNoOrgText)}
           </p>
           <p className="small mb-2">
             {intl.formatMessage(messages.certificateCardDateLabel, {
