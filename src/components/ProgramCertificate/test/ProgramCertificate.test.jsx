@@ -18,7 +18,7 @@ describe('program-certificate', () => {
     program_title: 'Program name',
     program_org: 'Test org',
     modified_date: '2023-02-02',
-    storages: [{id: 'storageId', name: "storageName"}],
+    storages: [{ id: 'storageId', name: 'storageName' }],
     handleCreate: jest.fn(),
   };
 
