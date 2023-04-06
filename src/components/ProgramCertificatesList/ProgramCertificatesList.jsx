@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import _ from 'lodash';
 
 import { ChevronLeft, Info } from '@edx/paragon/icons';
 import {
@@ -12,13 +11,17 @@ import { logError } from '@edx/frontend-platform/logging';
 
 import ProgramCertificate from '../ProgramCertificate';
 import NavigationBar from '../NavigationBar';
-import { getProgramCertificates, getAvailableStorages, initVerifiableCredentialIssuance } from './data/service';
+import {
+  getProgramCertificates,
+  getAvailableStorages,
+  initVerifiableCredentialIssuance,
+} from './data/service';
 import messages from './messages';
 import ProgramCertificateModal from '../ProgramCertificateModal';
 
 function ProgramCertificatesList({ intl }) {
-  const [certificatesIsLoaded, setCertificatesIsLoaded] = useState(false);
-  const [certificatesHasNoData, setCertificatesHasNoData] = useState(false);
+  const [certificatesAreLoaded, setCertificatesAreLoaded] = useState(false);
+  const [dataLoadingIssue, setDataLoadingIssue] = useState('');
   const [certificates, setCertificates] = useState([]);
 
   const [storagesIsLoaded, setStoragesIsLoaded] = useState(false);
@@ -26,42 +29,57 @@ function ProgramCertificatesList({ intl }) {
 
   const [modalIsOpen, openModal, closeModal] = useToggle(false);
 
-  const [verfifiableCredentialIssuanceData, setVerifiableCredentialIssuanceData] = useState({});
+  const [
+    verfifiableCredentialIssuanceData,
+    setVerifiableCredentialIssuanceData,
+  ] = useState({});
 
   useEffect(() => {
-    getProgramCertificates().then((data) => {
-      if (_.isEmpty(data)) {
-        setCertificatesHasNoData(true);
-      } else {
+    getProgramCertificates()
+      .then((data) => {
         setCertificates(data.program_credentials);
-      }
-      setCertificatesIsLoaded(true);
-    }).catch((error) => {
-      const errorMessage = (`Error: Could not fetch program certificates for user: ${error.message}`);
-      logError(errorMessage);
-    });
+        setCertificatesAreLoaded(true);
+      })
+      .catch((error) => {
+        const errorMessage = intl.formatMessage(
+          messages.errorProgramCertificatesLoading,
+        );
+        setDataLoadingIssue(errorMessage);
+        logError(errorMessage + error.message);
+      });
+  }, [intl]);
 
-    getAvailableStorages().then((data) => {
-      setStorages(data);
-      setStoragesIsLoaded(true);
-    }).catch((error) => {
-      const errorMessage = (`Error: Could not fetch available storages: ${error.message}`);
-      logError(errorMessage);
-    });
-  }, []);
+  useEffect(() => {
+    getAvailableStorages()
+      .then((data) => {
+        setStorages(data);
+        setStoragesIsLoaded(true);
+      })
+      .catch((error) => {
+        const errorMessage = intl.formatMessage(
+          messages.errorAvailableStoragesLoading,
+        );
+        setDataLoadingIssue(errorMessage);
+        logError(errorMessage + error.message);
+      });
+  }, [intl]);
 
   const handleCreate = (uuid, storageId) => {
-    initVerifiableCredentialIssuance({ uuid, storageId }).then((data) => {
-      setVerifiableCredentialIssuanceData(data);
-      if (data.redirect) {
-        window.location = data.deeplink;
-      } else {
+    initVerifiableCredentialIssuance({ uuid, storageId })
+      .then((data) => {
+        setVerifiableCredentialIssuanceData(data);
+        if (data.redirect) {
+          window.location = data.deeplink;
+        } else {
+          openModal();
+        }
+      })
+      .catch((error) => {
+        const errorMessage = intl.formatMessage(messages.errorIssuanceInit);
+        setVerifiableCredentialIssuanceData({ error: errorMessage });
         openModal();
-      }
-    }).catch((error) => {
-      const errorMessage = (`Error: Could not fetch learner record data for user: ${error.message}`);
-      logError(errorMessage);
-    });
+        logError(errorMessage + error.message);
+      });
   };
 
   const renderProfile = () => {
@@ -77,11 +95,13 @@ function ProgramCertificatesList({ intl }) {
     );
   };
 
-  const renderCredentialsServiceIssueAlert = () => (
+  const renderCredentialsServiceIssueAlert = ({
+    message = intl.formatMessage(messages.credentialsListError),
+  }) => (
     <div tabIndex="-1">
       <Alert variant="danger">
         <Info className="text-danger-500 mr-2 mb-1" />
-        {intl.formatMessage(messages.credentialsListError)}
+        {message}
       </Alert>
     </div>
   );
@@ -94,33 +114,33 @@ function ProgramCertificatesList({ intl }) {
 
   const renderProgramCertificates = () => (
     <section id="program-certificates-list" className="pl-3 pr-3 pb-3">
-      <p>
-        {intl.formatMessage(messages.credentialsDescription)}
-      </p>
+      <p>{intl.formatMessage(messages.credentialsDescription)}</p>
       <Row className="mt-4">
-        {(certificates.map((certificate) => (
+        {certificates.map((certificate) => (
           <ProgramCertificate
             key={certificate.uuid}
             storages={storages}
             handleCreate={handleCreate}
             {...certificate}
           />
-        )))}
+        ))}
       </Row>
     </section>
   );
 
   const renderData = () => {
-    if (certificatesIsLoaded || storagesIsLoaded) {
-      if (certificatesHasNoData) {
-        return renderCredentialsServiceIssueAlert();
-      }
-      if (!certificates.length) {
-        return renderEmpty();
-      }
-      return renderProgramCertificates();
+    if (dataLoadingIssue) {
+      return renderCredentialsServiceIssueAlert({
+        message: dataLoadingIssue,
+      });
     }
-    return null;
+    if (!certificates.length) {
+      return renderEmpty();
+    }
+    if (!certificatesAreLoaded || !storagesIsLoaded) {
+      return null;
+    }
+    return renderProgramCertificates();
   };
 
   const renderHelp = () => (
@@ -148,7 +168,11 @@ function ProgramCertificatesList({ intl }) {
       </h1>
       {renderData()}
       {renderHelp()}
-      <ProgramCertificateModal isOpen={modalIsOpen} close={closeModal} data={verfifiableCredentialIssuanceData} />
+      <ProgramCertificateModal
+        isOpen={modalIsOpen}
+        close={closeModal}
+        data={verfifiableCredentialIssuanceData}
+      />
     </main>
   );
 }
