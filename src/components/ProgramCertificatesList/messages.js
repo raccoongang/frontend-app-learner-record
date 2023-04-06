@@ -41,6 +41,21 @@ const messages = defineMessages({
     defaultMessage: 'read in our verifiable credentials help area.',
     description: 'Text containing link that redirects user to support page',
   },
+  errorProgramCertificatesLoading: {
+    id: 'credentials.error.fetch.certificates',
+    defaultMessage: 'Could not fetch program certificates',
+    description: 'API data fetching error when program certificates cannot be loaded',
+  },
+  errorAvailableStoragesLoading: {
+    id: 'credentials.error.fetch.storages',
+    defaultMessage: 'Could not fetch available storages',
+    description: 'API data fetching error when storages configuration cannot be loaded',
+  },
+  errorIssuanceInit: {
+    id: 'credentials.error.issuance.init',
+    defaultMessage: 'Could not initiate issuance line',
+    description: 'Verifiable credential issuance init API request has failed',
+  },
 });
 
 export default messages;
