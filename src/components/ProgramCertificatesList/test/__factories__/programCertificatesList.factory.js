@@ -1,6 +1,6 @@
 import { Factory } from 'rosie'; // eslint-disable-line import/no-extraneous-dependencies
 
-export default Factory.define('program_credentials')
+export const getProgramCredentialsFactory = Factory.define('program_credentials')
   .attr('program_credentials', [
     {
       uuid: '12345',
@@ -25,3 +25,9 @@ export default Factory.define('program_credentials')
       modified_date: '2023-02-02',
     },
   ]);
+
+export const getAvailableStoragesFactory = Factory.define('storages')
+  .attrs({
+    id: 'test_storage',
+    name: 'Test Storage Name',
+  });
