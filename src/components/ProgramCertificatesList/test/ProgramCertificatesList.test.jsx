@@ -77,16 +77,4 @@ describe('program-certificates-data', () => {
     expect(await screen.findByText('No certificate available. Finish you first program to get a certificate.')).toBeTruthy();
   });
 
-  // it('should display error message when api call failed', async () => {
-  //   await act(async () => {
-  //     const axiosMock = new MockAdapter(getAuthenticatedHttpClient());
-  //     axiosMock
-  //       .onGet(`${getConfig().CREDENTIALS_BASE_URL}/verifiable_credentials/api/v1/program_credentials/`)
-  //       .reply(404, {});
-  //     axiosMock
-  //       .onGet(`${getConfig().CREDENTIALS_BASE_URL}/verifiable_credentials/api/v1/storages/`)
-  //       .reply(200, []);
-  //     render(<ProgramCertificatesList />);
-  //   });
-  // });
 });
