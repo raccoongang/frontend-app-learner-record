@@ -76,5 +76,4 @@ describe('program-certificates-data', () => {
     });
     expect(await screen.findByText('No certificate available. Finish you first program to get a certificate.')).toBeTruthy();
   });
-
 });
