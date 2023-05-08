@@ -71,6 +71,11 @@ const messages = defineMessages({
     defaultMessage: 'QR code of the credential certificate',
     description: 'The label for QR code image',
   },
+  certificateModalCopyLinkLabel: {
+    id: 'credentials.modal.copyLink.label',
+    defaultMessage: 'Copy link',
+    description: 'Label for copy link from QR code',
+  },
   credentialsModalError: {
     id: 'credentials.modal.error',
     defaultMessage: 'An error occurred attempting to retrieve your program certificate. Please try again later.',
