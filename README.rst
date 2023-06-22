@@ -92,12 +92,12 @@ Verifiable Credentials
 ......................
 
 An optional feature. It is behind a feature flag.
-The feature introduces a couple of enviroment variables:
+The feature introduces two environment variables:
 
 * ``ENABLE_VERIFIABLE_CREDENTIALS`` -- Toggles the Verifiable Credentials feature (used by the Credentials IDA and this micro-frontend)
-* ``SUPPORT_URL_VERIFIABLE_CREDENTIALS`` -- A link to a help/support center for learners who run into problems whilst trying to create verifiable credentials
+* ``SUPPORT_URL_VERIFIABLE_CREDENTIALS`` -- A link to a help/support center for learners who run into problems while trying to create their verifiable credential
 
-The Verifiable Credentials UI is a functional addition to the corresponding backend app (it will use a REST API from the Credentials IDA located at `credentials/apps/verifiable_credentials/rest_api`.
+The Verifiable Credentials UI is a functional addition to the corresponding backend app. It will use a REST API from the Credentials IDA located at `credentials/apps/verifiable_credentials/rest_api`.
 
 
 Project Structure

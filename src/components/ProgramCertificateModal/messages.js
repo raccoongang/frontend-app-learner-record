@@ -18,18 +18,21 @@ const messages = defineMessages({
   },
   certificateModalMobileTitle: {
     id: 'credentials.modal.mobile.title',
-    defaultMessage: 'To download a verifiable credential to your mobile wallet application, please follow the instructions below.',
+    defaultMessage:
+      'To download a verifiable credential to your mobile wallet application, please follow the instructions below.',
     description: 'Text for a mobile dialog of the program certificate.',
   },
   certificateModalAppStoreBtn: {
     id: 'credentials.modal.instruction.appStore.button',
     defaultMessage: 'Download the mobile app from the Apple App Store',
-    description: 'The label for the link to download the apple version of the app.',
+    description:
+      'The label for the link to download the apple version of the app.',
   },
   certificateModalGooglePlayBtn: {
     id: 'credentials.modal.instruction.googlePlay.button',
-    defaultMessage: 'Download the  mobile app from the Google Play',
-    description: 'The label for the link to download the google version of the app.',
+    defaultMessage: 'Download the mobile app from the Google Play',
+    description:
+      'The label for the link to download the google version of the app.',
   },
   certificateModalInstructionTitle: {
     id: 'credentials.modal.instruction.title',
@@ -43,17 +46,19 @@ const messages = defineMessages({
   },
   certificateModalInstructionStep2: {
     id: 'credentials.modal.instruction.step2',
-    defaultMessage: 'Open the application and select the option scan the QR code. Scan the provided code.',
+    defaultMessage:
+      'Open the application and select the option "Scan QR code". Scan the provided code.',
     description: 'Text of step of the instructions.',
   },
   certificateModalInstructionStep3: {
     id: 'credentials.modal.instruction.step3',
-    defaultMessage: 'Follow this instructions below to get verifiable credential:',
+    defaultMessage:
+      'Follow the instructions below to get the verifiable credential:',
     description: 'Text of step of the instructions.',
   },
   certificateModalInstructionStep4: {
     id: 'credentials.modal.instruction.step4',
-    defaultMessage: 'Once you have successfully done - close modal.',
+    defaultMessage: 'Once you have successfully finished, close the modal.',
     description: 'Text of step of the instructions.',
   },
   certificateModalDeeplinkBtn: {
@@ -68,8 +73,8 @@ const messages = defineMessages({
   },
   certificateModalQrCodeLabel: {
     id: 'credentials.modal.qrCode.label',
-    defaultMessage: 'QR code of the credential certificate',
-    description: 'The label for QR code image',
+    defaultMessage: 'QR code to obtain the verifiable credential',
+    description: 'The label for verifiable credential QR code',
   },
   certificateModalCopyLinkLabel: {
     id: 'credentials.modal.copyLink.label',
@@ -78,8 +83,10 @@ const messages = defineMessages({
   },
   credentialsModalError: {
     id: 'credentials.modal.error',
-    defaultMessage: 'An error occurred attempting to retrieve your program certificate. Please try again later.',
-    description: 'An error message indicating there is a problem retrieving the user\'s program certificate data',
+    defaultMessage:
+      'An error occurred attempting to retrieve your program certificate. Please try again later.',
+    description:
+      "An error message indicating there is a problem retrieving the user's program certificate data",
   },
 });
 
