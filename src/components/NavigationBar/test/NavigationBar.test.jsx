@@ -28,7 +28,7 @@ describe('navigation-bar', () => {
   });
   afterEach(cleanup);
 
-  it('not renders the component with disabled the Verifiable Credentials functionality', () => {
+  it('does not render the component with Verifiable Credentials functionality when flag is disabled', () => {
     mergeConfig({ ENABLE_VERIFIABLE_CREDENTIALS: false });
     const { container } = render(<NavigationBar />);
     expect(container.innerHTML).toHaveLength(0);
