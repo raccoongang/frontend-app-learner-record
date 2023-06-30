@@ -9,8 +9,8 @@ export const getProgramCredentialsFactory = Factory.define('program_credentials'
       download_url: null,
       credential_id: 1,
       program_uuid: '54321',
-      program_title: 'Programm title 1',
-      program_org: 'Programm org 1',
+      program_title: 'Program title 1',
+      program_org: 'Program org 1',
       modified_date: '2022-10-08',
     },
     {

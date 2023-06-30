@@ -38,7 +38,7 @@ const messages = defineMessages({
   },
   credentialsHelpLink: {
     id: 'credentials.help.link',
-    defaultMessage: 'read in our verifiable credentials help area.',
+    defaultMessage: 'read in our Verifiable Credentials Support Page.',
     description: 'Text containing link that redirects user to support page',
   },
   errorProgramCertificatesLoading: {
