@@ -17,8 +17,8 @@ function ProgramCertificateModal({
   const {
     deeplink,
     qrcode,
-    app_link_android: appLinkAndroid,
-    app_link_ios: appLinkIos,
+    app_link_android: googlePlayAppLink,
+    app_link_ios: appleStoreAppLink,
     error,
   } = data;
 
@@ -72,9 +72,7 @@ function ProgramCertificateModal({
                 type="button"
               >
                 <ContentCopy />
-                {intl.formatMessage(
-                  messages.certificateModalCopyLinkLabel,
-                )}
+                {intl.formatMessage(messages.certificateModalCopyLinkLabel)}
               </button>
             </div>
             <div className="col-12 col-md-8">
@@ -103,17 +101,11 @@ function ProgramCertificateModal({
                   )}
                 </li>
                 <div className="d-flex justify-content-between buttons-wrapper">
-                  <a href={appLinkAndroid}>
-                    <img
-                      src={googlePlayImg}
-                      alt="Google Play"
-                    />
+                  <a href={googlePlayAppLink}>
+                    <img src={googlePlayImg} alt="Google Play" />
                   </a>
-                  <a href={appLinkIos}>
-                    <img
-                      src={appStoreImg}
-                      alt="App Store"
-                    />
+                  <a href={appleStoreAppLink}>
+                    <img src={appStoreImg} alt="Apple App Store" />
                   </a>
                 </div>
               </ol>
@@ -123,7 +115,7 @@ function ProgramCertificateModal({
         <MobileView>
           <p>{intl.formatMessage(messages.certificateModalMobileTitle)}</p>
           <Button
-            href={appLinkIos}
+            href={appleStoreAppLink}
             target="_blank"
             size="lg"
             className="mb-3 mobile-button"
@@ -132,13 +124,10 @@ function ProgramCertificateModal({
               messages.certificateModalAppStoreBtn,
             )}
           >
-            <img
-              src={appStoreImg}
-              alt="App Store"
-            />
+            <img src={appStoreImg} alt="Apple App Store" />
           </Button>
           <Button
-            href={appLinkAndroid}
+            href={googlePlayAppLink}
             target="_blank"
             size="lg"
             className="mb-3 mobile-button"
@@ -147,10 +136,7 @@ function ProgramCertificateModal({
               messages.certificateModalGooglePlayBtn,
             )}
           >
-            <img
-              src={googlePlayImg}
-              alt="Google Play"
-            />
+            <img src={googlePlayImg} alt="Google Play" />
           </Button>
           <p />
           <ol>
