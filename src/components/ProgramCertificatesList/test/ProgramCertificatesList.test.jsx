@@ -21,7 +21,7 @@ describe('program-certificates-list', () => {
 
   it('renders the Program Certificates List', () => {
     render(<ProgramCertificatesList />);
-    
+
     expect(screen.getByText('Verifiable Credentials')).toBeTruthy();
     expect(screen.getByText('Back to My Profile')).toBeTruthy();
     expect(screen.getByText('Questions about Verifiable Credentials?')).toBeTruthy();
@@ -52,8 +52,8 @@ describe('program-certificates-data', () => {
     expect(await screen.findByText('Verifiable Credentials')).toBeTruthy();
     expect(await screen.findByText('A certificate for a program will appear in the list once you '
       + 'have earned all course certificates in a program.')).toBeTruthy();
-    expect(await screen.findByText("Program title 1")).toBeTruthy();
-    expect(await screen.findByText("Program org 1")).toBeTruthy();
+    expect(await screen.findByText('Program title 1')).toBeTruthy();
+    expect(await screen.findByText('Program org 1')).toBeTruthy();
   });
 
   it('should display no certificates when no enrolled_programs are present', async () => {
@@ -67,6 +67,10 @@ describe('program-certificates-data', () => {
         .reply(200, []);
       render(<ProgramCertificatesList />);
     });
-    expect(await screen.findByText('No certificate available. Finish you first program to get a certificate.')).toBeTruthy();
+    expect(
+      await screen.findByText(
+        'No certificate available. Finish your first program to get a certificate.',
+      ),
+    ).toBeTruthy();
   });
 });
